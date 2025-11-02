@@ -43,7 +43,7 @@ def backup_deleted_thread(thread_id, thread_data):
             archive = {}
 
     archive[str(thread_id)] = {
-        "deleted_at": datetime.datetime.utcnow().isoformat() + "Z",
+        "deleted_at": datetime.datetime.now(datetime.UTC).isoformat() + "Z",
         "data": thread_data
     }
 
@@ -88,5 +88,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-# END OF FILE: create.py
-# MODULES: The File Itslef
+# END OF FILE: delete.py
+# MODULES: DELETE.<funcs>
