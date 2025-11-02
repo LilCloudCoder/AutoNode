@@ -1,11 +1,3 @@
-# =======================================
-# Project: Vyom.ai
-# File: delete.py
-# Author: <yogya.coder@gmail.com>
-# Last Edited: SAT 6 SEP 2025
-# =======================================
-
-
 import os
 import json
 import sys
