@@ -326,6 +326,7 @@ class CreateThread:
         tmp_path = os.path.join(dir_name, f".tmp_registry_{os.getpid()}_{int(time.time())}.json")
         with open(tmp_path, "w") as f:
             json.dump(registry, f, indent=2)
+        os.replace(tmp_path, THREAD_REGISTRY_PATH)
 
     @staticmethod
     def print_info(thread_id: float):
