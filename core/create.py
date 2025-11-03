@@ -5,7 +5,6 @@ import time
 from typing import Optional
 from ctypes import cdll, c_int
 import json
-from time import time
 from datetime import datetime
 
 try:
