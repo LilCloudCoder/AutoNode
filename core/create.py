@@ -19,10 +19,9 @@ BASE_DIR = os.path.dirname(__file__)
 THREAD_REGISTRY_PATH = os.path.abspath(os.path.join(os.path.dirname(BASE_DIR), "thread_registry.json"))
 SWIFT_DYLIB_PATH = os.path.abspath(os.path.join(BASE_DIR, "swift", "libMetalBridge.dylib"))
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(levelname)s] %(asctime)s - %(message)s"
-)
+# Configure root logging only if not already configured by the host app
+if not logging.getLogger().handlers:
+    logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(asctime)s - %(message)s")
 logger = logging.getLogger("Threader")
 
 
