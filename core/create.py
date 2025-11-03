@@ -24,6 +24,10 @@ if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(asctime)s - %(message)s")
 logger = logging.getLogger("Threader")
 
+# One-time flags/cache
+_STATS_LOGGED = False
+_GPU_LIB = None
+
 
 class MetalThreadRunner:
     """
