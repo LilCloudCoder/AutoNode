@@ -7,8 +7,6 @@ A lightweight Python framework for creating, managing, and executing token-prote
 - Optional GPU execution path via a Swift/Metal dynamic library (`libMetalBridge.dylib`).
 - Simple CLI to delete threads with archival.
 
-> Current date: 2025-11-03
-
 ---
 
 ## Features
