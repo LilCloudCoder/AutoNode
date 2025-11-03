@@ -14,7 +14,10 @@ try:
 except ImportError:
     raise ImportError("INSTALLATION REQUIRED. Modules: Numba/Psutil/Numpy")
 
-THREAD_REGISTRY_PATH = os.path.abspath("./thread_registry.json")
+# Paths and globals
+BASE_DIR = os.path.dirname(__file__)
+THREAD_REGISTRY_PATH = os.path.abspath(os.path.join(os.path.dirname(BASE_DIR), "thread_registry.json"))
+SWIFT_DYLIB_PATH = os.path.abspath(os.path.join(BASE_DIR, "swift", "libMetalBridge.dylib"))
 
 logging.basicConfig(
     level=logging.INFO,
