@@ -44,10 +44,12 @@ class MetalThreadRunner:
     """
 
     def __init__(self):
-        dylib_path = os.path.abspath("./swift/libMetalBridge.dylib")
-        if not os.path.exists(dylib_path):
-            raise FileNotFoundError(f"Metal dylib not found at {dylib_path}")
-        self.lib = cdll.LoadLibrary(dylib_path)
+        global _GPU_LIB
+        if _GPU_LIB is None:
+            if not os.path.exists(SWIFT_DYLIB_PATH):
+                raise FileNotFoundError(f"Metal dylib not found at {SWIFT_DYLIB_PATH}")
+            _GPU_LIB = cdll.LoadLibrary(SWIFT_DYLIB_PATH)
+        self.lib = _GPU_LIB
 
     def execute(self, thread_id: int):
         logger.info(f"[PYTHON] Dispatching Thread {thread_id} to GPU")
