@@ -85,7 +85,9 @@ def log_system_stats():
         else:
             logger.warning(f"GPU dylib not found at {SWIFT_DYLIB_PATH}. GPU execution may fail.")
     except Exception as e:
-        logger.error(f"GPU check failed: {e}")
+        logger.error(f"System stats check failed: {e}")
+    finally:
+        _STATS_LOGGED = True
 
 
 class CreateThread:
