@@ -5,11 +5,13 @@ from typing import List, Dict, Optional, Any
 from datetime import datetime
 from copy import deepcopy
 
-THREAD_REGISTRY_PATH = os.path.abspath("./thread_registry.json")
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(levelname)s] %(asctime)s - %(message)s"
-)
+# Paths
+BASE_DIR = os.path.dirname(__file__)
+THREAD_REGISTRY_PATH = os.path.abspath(os.path.join(os.path.dirname(BASE_DIR), "thread_registry.json"))
+
+# Configure logging only if not already configured by host app
+if not logging.getLogger().handlers:
+    logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(asctime)s - %(message)s")
 logger = logging.getLogger("ThreadOperations")
 
 
