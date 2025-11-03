@@ -6,7 +6,6 @@ from datetime import datetime
 from copy import deepcopy
 
 THREAD_REGISTRY_PATH = os.path.abspath("./thread_registry.json")
-
 logging.basicConfig(
     level=logging.INFO,
     format="[%(levelname)s] %(asctime)s - %(message)s"
