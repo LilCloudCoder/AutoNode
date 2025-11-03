@@ -83,7 +83,7 @@ def log_system_stats():
         if os.path.exists(SWIFT_DYLIB_PATH):
             logger.info("GPU (Metal dylib) detected and available.")
         else:
-            logger.warning("GPU dylib not found. GPU execution may fail.")
+            logger.warning(f"GPU dylib not found at {SWIFT_DYLIB_PATH}. GPU execution may fail.")
     except Exception as e:
         logger.error(f"GPU check failed: {e}")
 
