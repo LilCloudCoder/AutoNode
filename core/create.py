@@ -388,7 +388,7 @@ class CreateThread:
             b = np.random.rand(size, size)
             out = np.zeros((size, size))
 
-            t0 = time()
+            t0 = time.perf_counter()
             parallel_kernel(a, b, out)
             t1 = time()
 
