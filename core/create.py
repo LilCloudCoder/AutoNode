@@ -263,7 +263,7 @@ class CreateThread:
             If the system is under high memory or CPU load.
         """
         mem = psutil.virtual_memory()
-        cpu = psutil.cpu_percent(interval=0.5)
+        cpu = psutil.cpu_percent(interval=0.0)
         if mem.percent > 95 or cpu > 95:
             error_msg = (
                 f"ERROR: MEMORY FULL OR CPU OVERLOADED | RAM: {mem.percent}%, CPU: {cpu}%"
