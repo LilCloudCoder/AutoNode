@@ -390,7 +390,7 @@ class CreateThread:
 
             t0 = time.perf_counter()
             parallel_kernel(a, b, out)
-            t1 = time()
+            t1 = time.perf_counter()
 
             logger.info(
                 f"Numba-parallel matrix multiplication complete. Shape: {out.shape}, Time: {t1 - t0:.4f}s"
