@@ -70,8 +70,8 @@ def generate_token() -> str:
 
 def log_system_stats():
     """
-    Logs current system CPU and memory usage.
-    Checks for GPU (Metal dylib) availability and logs accordingly.
+    Logs current system CPU and memory usage once per process (non-blocking).
+    Also checks for GPU (Metal dylib) availability using a cached path.
     """
     global _STATS_LOGGED
     if _STATS_LOGGED:
