@@ -377,20 +377,6 @@ def mutate_thread(
     return entry
 
 
-def delete_thread(thread_id: float) -> bool:
-    """
-    Removes a thread from the registry. Returns True if deleted.
-    """
-    reg = _load_registry()
-    tk = str(thread_id)
-    if tk not in reg:
-        return False
-    del reg[tk]
-    _save_registry(reg)
-    logger.info(f"Deleted thread {thread_id}")
-    return True
-
-
 def summarize_registry() -> Dict[str, Any]:
     """
     Returns a compact summary: counts per stage/device and total.
