@@ -73,11 +73,14 @@ def log_system_stats():
     Logs current system CPU and memory usage.
     Checks for GPU (Metal dylib) availability and logs accordingly.
     """
-    cpu_percent = psutil.cpu_percent(interval=1)
-    mem = psutil.virtual_memory()
-    logger.info(f"CPU Usage: {cpu_percent}% | Memory: {mem.percent}% used")
+    global _STATS_LOGGED
+    if _STATS_LOGGED:
+        return
     try:
-        if os.path.exists("./threader/swift/main/libMetalBridge.dylib"):
+        cpu_percent = psutil.cpu_percent(interval=0.0)
+        mem = psutil.virtual_memory()
+        logger.info(f"CPU Usage: {cpu_percent}% | Memory: {mem.percent}% used")
+        if os.path.exists(SWIFT_DYLIB_PATH):
             logger.info("GPU (Metal dylib) detected and available.")
         else:
             logger.warning("GPU dylib not found. GPU execution may fail.")
