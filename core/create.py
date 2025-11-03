@@ -39,7 +39,7 @@ class MetalThreadRunner:
     """
 
     def __init__(self):
-        dylib_path = os.path.abspath("swift/libMetalBridge.dylib")
+        dylib_path = os.path.abspath("./swift/libMetalBridge.dylib")
         if not os.path.exists(dylib_path):
             raise FileNotFoundError(f"Metal dylib not found at {dylib_path}")
         self.lib = cdll.LoadLibrary(dylib_path)
@@ -49,7 +49,7 @@ class MetalThreadRunner:
         self.lib.run_gpu_thread(c_int(thread_id))
 
 
-def _generate_token() -> str:
+def generate_token() -> str:
     """
     Generates a secure hexadecimal authentication token for internal verification.
 
@@ -61,7 +61,7 @@ def _generate_token() -> str:
     return secrets.token_hex(16)
 
 
-def _log_system_stats():
+def log_system_stats():
     """
     Logs current system CPU and memory usage.
     Checks for GPU (Metal dylib) availability and logs accordingly.
@@ -158,7 +158,7 @@ class CreateThread:
                 f"Invalid device: {device}. Must be one of {self.VALID_DEVICES}"
             )
 
-        _log_system_stats()
+        log_system_stats()
 
         self.thread_id = thread_id
         self.stage = stage
@@ -173,7 +173,16 @@ class CreateThread:
 
         self.max_memory_mb = self.metadata.get("max_memory_mb", 500)
 
-        self._auth_token = _generate_token()
+        # Establish a session token using environment variable
+        env_key = "AUTONODE_TOKEN"
+        env_token = os.environ.get(env_key)
+        if not env_token:
+            if not isinstance(token, str) or not token.strip():
+                raise PermissionError("Invalid authentication token.")
+            os.environ[env_key] = token
+            env_token = token
+
+        self._auth_token = env_token
         self._validate_token(token)
         self._validate_thread_parameters()
         self._record_event(
@@ -182,18 +191,10 @@ class CreateThread:
 
     def _validate_token(self, token: str):
         """
-        Validates the provided token against the internally generated auth token.
-
-        Parameters
-        ----------
-        token : str
-            The token provided during thread instantiation.
-
-        Raises
-        ------
-        PermissionError
-            If the provided token is invalid or missing.
+        Validates the provided token against the session token (from environment).
         """
+        if not isinstance(token, str) or not token.strip():
+            raise PermissionError("Invalid authentication token.")
         if token != self._auth_token:
             raise PermissionError("Invalid authentication token.")
 
@@ -445,6 +446,10 @@ def spawn_thread_batch(batch_data: list) -> list:
         f"Batch spawn completed. {len(threads)} threads successfully launched."
     )
     return threads
+
+if __name__ == "__main__":
+    token = generate_token()
+    print(token)
 
 # Dir: ./threader
 # END OF FILE: create.py
