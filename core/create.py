@@ -321,7 +321,10 @@ class CreateThread:
             "history": self.history,
         }
 
-        with open(THREAD_REGISTRY_PATH, "w") as f:
+        # Atomic write to avoid corrupting the registry on crashes
+        dir_name = os.path.dirname(THREAD_REGISTRY_PATH) or "."
+        tmp_path = os.path.join(dir_name, f".tmp_registry_{os.getpid()}_{int(time.time())}.json")
+        with open(tmp_path, "w") as f:
             json.dump(registry, f, indent=2)
 
     @staticmethod
