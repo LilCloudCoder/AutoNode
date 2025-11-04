@@ -31,7 +31,11 @@ def _load_registry() -> Dict[str, Any]:
 
 
 def _save_registry(registry: Dict[str, Any]) -> None:
-    with open(THREAD_REGISTRY_PATH, "w") as f:
+    """Atomically write the registry to disk to avoid corruption."""
+    dir_name = os.path.dirname(THREAD_REGISTRY_PATH) or "."
+    import time as _time
+    tmp_path = os.path.join(dir_name, f".tmp_registry_{os.getpid()}_{int(_time.time())}.json")
+    with open(tmp_path, "w") as f:
         json.dump(registry, f, indent=2)
 
 
