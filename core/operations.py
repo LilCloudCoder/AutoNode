@@ -25,8 +25,8 @@ def _load_registry() -> Dict[str, Any]:
     try:
         with open(THREAD_REGISTRY_PATH, "r") as f:
             return json.load(f) or {}
-    except json.JSONDecodeError:
-        logger.warning("Thread registry is corrupted; starting with an empty registry.")
+    except (json.JSONDecodeError, OSError, ValueError):
+        logger.warning("Thread registry is unreadable or corrupted; starting with an empty registry.")
         return {}
 
 
