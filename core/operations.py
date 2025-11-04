@@ -37,6 +37,7 @@ def _save_registry(registry: Dict[str, Any]) -> None:
     tmp_path = os.path.join(dir_name, f".tmp_registry_{os.getpid()}_{int(_time.time())}.json")
     with open(tmp_path, "w") as f:
         json.dump(registry, f, indent=2)
+    os.replace(tmp_path, THREAD_REGISTRY_PATH)
 
 
 def _append_history(entry: Dict[str, Any], message: str) -> None:
